@@ -1,12 +1,10 @@
-node_modules/
-docker/
+node_modules
+docker
 .gitignore
 .git
 README.md
 docker-compose.yml
-.github/
-dist/
-coverage/
-biome.json
+.github
+dist
+coverage
 .dockerignore
-jest.config.js
