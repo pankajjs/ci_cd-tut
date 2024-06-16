@@ -20,6 +20,12 @@ jobs:
       - run: npm install
       - run: npm run format:check
       - run: npm run lint:check
+
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: lint-artifacts
+          path: app
   build:
     name: Building and testing source code
     needs: lint
@@ -29,7 +35,10 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '20'
-      - run: npm install
+      - name: Download artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: lint-artifacts
       - run: npm run test
       - run: npm run build
   
