@@ -14,8 +14,6 @@ jobs:
     runs-on: ubuntu-latest
     steps: 
       - uses: actions/checkout@v4
-        with:
-          repository: 'ci_cd_tut'
       - uses: actions/setup-node@v4
         with:
           node-version: '20'
@@ -27,7 +25,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: lint-artifacts
-          path: ci_cd_tut
+          path: ${{github.repository}}
   build:
     name: Building and testing source code
     needs: lint
