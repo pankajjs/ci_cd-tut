@@ -1,4 +1,4 @@
-import { sum } from "../index";
+import { sum } from "../sum";
 
 describe("Test Index", () => {
 	test("returns 2 when adding 1 and 1", () => {
