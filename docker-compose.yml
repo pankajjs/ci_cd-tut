@@ -1,0 +1,14 @@
+version: "3.8"
+
+services:
+  ci_cd_tut:
+    build:
+      context: .
+      dockerfile: ./docker/dev/Dockerfile
+    container_name: "ci_cd_tut"
+    ports:
+      - "3000:3000"
+    volumes:
+      - "./:/app"
+volumes:
+  app:
