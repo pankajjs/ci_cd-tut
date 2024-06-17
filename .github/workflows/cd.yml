@@ -21,29 +21,19 @@ jobs:
           push: true
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/ci_cd_tut:latest
 
-      - name: Set up SSH
-        uses: webfactory/ssh-agent@v0.5.3
+      - name: deploy on Ec2
+        uses: appleboy/ssh-action@v0.1.6
         with:
-          ssh-private-key: ${{ secrets.EC2_SSH_KEY }}
-
-      - name: Pull Docker image from Docker Hub and run on EC2
-        env:
-          EC2_INSTANCE_HOST: ${{ secrets.EC2_INSTANCE_HOST }}
-          EC2_INSTANCE_USERNAME: ${{ secrets.EC2_INSTANCE_USERNAME }}
-        run: |
-          ssh -o StrictHostKeyChecking=no $EC2_INSTANCE_USERNAME@$EC2_INSTANCE_HOST
-          
-          # Pull Docker image from Docker Hub
-          docker pull pankajshadev/ci_cd_tut:latest
-
-          # Stop and remove any existing container
-          docker stop ci_cd_tut || true
-          docker rm ci_cd_tut || true
-
-          # Run the Docker container
-          docker run -d --name ci_cd_tut -p 3000:3000 pankajshadev/ci_cd_tut:latest
-      
-
-
-
-
+          host: ${{ secrets.EC2_INSTANCE_HOST }}
+          username: ${{ secrets.EC2_INSTANCE_USERNAME }}
+          key: ${{ secrets.EC2_SSH_KEY }}
+          script: |
+            # Pull Docker image from Docker Hub
+            docker pull pankajshadev/ci_cd_tut:latest
+            
+            # Stop and remove any existing container
+            docker stop ci_cd_tut || true
+            docker rm ci_cd_tut || true
+            
+            # Run the Docker container
+            docker run -d --name ci_cd_tut -p 3000:3000 pankajshadev/ci_cd_tut:latest
