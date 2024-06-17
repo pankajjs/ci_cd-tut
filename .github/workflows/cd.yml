@@ -20,7 +20,8 @@ jobs:
           file: ./docker/prod/Dockerfile
           push: true
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/ci_cd_tut:latest
-
+      - name: Print environment variables
+        run: env
       - name: deploy on Ec2
         uses: appleboy/ssh-action@v0.1.6
         with:
@@ -29,11 +30,11 @@ jobs:
           key: ${{ secrets.EC2_SSH_KEY }}
           script: |
             # Pull Docker image from Docker Hub
-            docker pull pankajshadev/ci_cd_tut:latest
+            docker pull ${{ secrets.DOCKERHUB_USERNAME }}/ci_cd_tut:latest
             
             # Stop and remove any existing container
             docker stop ci_cd_tut || true
             docker rm ci_cd_tut || true
             
             # Run the Docker container
-            docker run -d --name ci_cd_tut -p 3000:3000 pankajshadev/ci_cd_tut:latest
+            docker run -d --name ci_cd_tut -p 3000:3000 ${{ secrets.DOCKERHUB_USERNAME }}/ci_cd_tut:latest
