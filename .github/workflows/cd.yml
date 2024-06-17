@@ -28,14 +28,11 @@ jobs:
           key: ${{ secrets.EC2_SSH_KEY }}
           script: |
             # Pull Docker image from Docker Hub
-            docker pull ${{ secrets.DOCKERHUB_USERNAME }}/ci_cd_tut:latest
+            sudo docker pull ${{ secrets.DOCKERHUB_USERNAME }}/ci_cd_tut:latest
             
             # Stop and remove any existing container
-            docker stop ci_cd_tut || true
-            docker rm ci_cd_tut || true
-            
-            echo ${{ secrets.EC2_SSH_KEY }}
-            echo ${{ secrets.EC2_INSTANCE_HOST }}
+            sudo docker stop ci_cd_tut || true
+            sudo docker rm ci_cd_tut || true
 
             # Run the Docker container
-            docker run -d --name ci_cd_tut -p 3000:3000 ${{ secrets.DOCKERHUB_USERNAME }}/ci_cd_tut:latest
+            sudo docker run -d --name ci_cd_tut -p 3000:3000 ${{ secrets.DOCKERHUB_USERNAME }}/ci_cd_tut:latest
