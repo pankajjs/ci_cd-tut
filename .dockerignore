@@ -1,14 +1,10 @@
-node_mudules
+node_modules
 docker
 .gitignore
 .git
 README.md
 docker-compose.yml
 .github
-.prettier*
-.eslint*
 dist
 coverage
-.prettierrc
-.prettierignore
-eslint*
+.dockerignore
